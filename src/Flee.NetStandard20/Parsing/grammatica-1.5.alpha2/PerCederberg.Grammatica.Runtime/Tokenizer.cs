@@ -107,13 +107,19 @@ namespace Flee.Parsing.grammatica_1._5.alpha2.PerCederberg.Grammatica.Runtime
                 case TokenPattern.PatternType.REGEXP:
                     try
                     {
-                        _nfaMatcher.AddPattern(pattern);
+                        //Because of a bug in nfaMatcher's treatment
+                        //of repeath specifiers we resort to effectively always using the 
+                        //regExp matcher.
+                        //Under some conditions, the process of throwing the 
+                        //exception from the nfaMatcher and catching it
+                        //incurs an unacceptable slowdown in performance
+                        _regExpMatcher.AddPattern(pattern);
                     }
                     catch (Exception)
                     {
                         try
                         {
-                            _regExpMatcher.AddPattern(pattern);
+                            _nfaMatcher.AddPattern(pattern);
                         }
                         catch (Exception e)
                         {

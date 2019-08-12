@@ -29,6 +29,7 @@ namespace Flee.Console
             IGenericExpression<bool> ge = context2.CompileGeneric<bool>("(a = 100 OR b > 0) AND c <> 2");
             bool result2 = ge.Evaluate();
 
+            System.Console.WriteLine("Finished");
             System.Console.ReadKey();
         }
     }

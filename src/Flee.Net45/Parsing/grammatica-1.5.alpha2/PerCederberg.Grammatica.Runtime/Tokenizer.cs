@@ -107,13 +107,14 @@ namespace Flee.Parsing.grammatica_1._5.alpha2.PerCederberg.Grammatica.Runtime
                 case TokenPattern.PatternType.REGEXP:
                     try
                     {
-                        _nfaMatcher.AddPattern(pattern);
+                        //See comments in NetStandard version for why the regExp matcher is tried first
+                        _regExpMatcher.AddPattern(pattern);
                     }
                     catch (Exception)
                     {
                         try
                         {
-                            _regExpMatcher.AddPattern(pattern);
+                            _nfaMatcher.AddPattern(pattern);
                         }
                         catch (Exception e)
                         {

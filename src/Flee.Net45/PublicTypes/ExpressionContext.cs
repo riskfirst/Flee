@@ -203,6 +203,11 @@ namespace Flee.PublicTypes
             return new Flee.InternalTypes.Expression<TResultType>(expression, this, true);
         }
 
+        public ICollection<string> GetIdentifiers(string expression)
+        {
+            return this.ParseIdentifiers(expression).GetIdentifiers(this);
+        }
+
         #endregion
 
         #region "Properties - Private"

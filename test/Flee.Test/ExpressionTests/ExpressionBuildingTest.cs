@@ -95,5 +95,14 @@ namespace ExpressionBuildingTest
             IDynamicExpression e1 = context.CompileDynamic("Parse(a)");
             e1.Evaluate();
         }
+
+        [TestMethod]
+        public void GetIdentifiers_SimpleExpression()
+        {
+            ExpressionContext context = new ExpressionContext();
+            var identifiers = context.GetIdentifiers("a + b * c");
+
+            Assert.IsTrue(identifiers.Count == 3);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Flee.PublicTypes;
+using System.Collections.Generic;
 
 namespace ExpressionBuildingTest
 {
@@ -100,9 +101,20 @@ namespace ExpressionBuildingTest
         public void GetIdentifiers_SimpleExpression()
         {
             ExpressionContext context = new ExpressionContext();
-            var identifiers = context.GetIdentifiers("a + b * c");
 
-            Assert.IsTrue(identifiers.Count == 3);
+            var identifiers = context.GetIdentifiers("IF(CustomFunction(cast(a, int) + round(sin(b) ^ 2)) * c / 0, \"string-literal\", null)");
+
+            var actual = new HashSet<string>(identifiers);
+            var expected = new HashSet<string> { "a", "b", "c" };
+
+            Assert.IsTrue(expected.SetEquals(actual));
+        }
+        
+        [TestMethod, ExpectedException(typeof(ExpressionCompileException))]
+        public void GetIdentifiers_RuntimeErrorCheck()
+        {
+            ExpressionContext context = new ExpressionContext();
+            context.GetIdentifiers("IF(a");
         }
     }
 }

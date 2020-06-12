@@ -180,7 +180,15 @@ namespace Flee.PublicTypes
             IdentifierAnalyzer analyzer = (IdentifierAnalyzer)parser.Analyzer;
             analyzer.Reset();
 
-            parser.Parse();
+            try
+            {
+                parser.Parse();
+            }
+            catch (ParserLogException ex)
+            {
+                // Syntax error; wrap it in our exception and rethrow
+                throw new ExpressionCompileException(ex);
+            }
 
             return (IdentifierAnalyzer)parser.Analyzer;
         }
